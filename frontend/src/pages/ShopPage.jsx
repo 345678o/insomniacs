@@ -24,9 +24,8 @@ const ShopPage = () => {
       <ScrollToTop smooth color="#0f0f10" />
       <Preloader />
       <HeaderTwo category={true} />
-      <Breadcrumb title={"Shop"} />
 
-      {/* Prominent search bar */}
+      {/* Prominent search bar — top, centered */}
       <section style={{ padding: "32px 0 0" }}>
         <div className="container container-lg">
           <form
@@ -100,6 +99,7 @@ const ShopPage = () => {
         </div>
       </section>
 
+      <Breadcrumb title={"Shop"} />
       <ShopSection />
       <ShippingTwo />
       <FooterTwo />

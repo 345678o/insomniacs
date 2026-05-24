@@ -10,8 +10,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { embedImage, vectorToBuffer, warmup } from "./lib/embed.js";
-import { ensureIndex, upsertProduct, disconnect } from "./lib/valkey.js";
+import { embedImage, vectorToBuffer, warmup } from "./lib/embed.mjs";
+import { ensureIndex, upsertProduct, disconnect } from "./lib/valkey.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

@@ -9,8 +9,8 @@
 import express from "express";
 import cors from "cors";
 import multer from "multer";
-import { embedImage, vectorToBuffer, warmup } from "./lib/embed.js";
-import { ensureIndex, knnSearch, countProducts, indexInfo } from "./lib/valkey.js";
+import { embedImage, vectorToBuffer, warmup } from "./lib/embed.mjs";
+import { ensureIndex, knnSearch, countProducts, indexInfo } from "./lib/valkey.mjs";
 
 const PORT = Number(process.env.PORT || 4000);
 const TOP_K = Number(process.env.TOP_K || 24);
