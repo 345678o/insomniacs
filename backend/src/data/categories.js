@@ -10,6 +10,7 @@ const categories = [
   { slug: 'streetwear',             label: 'Streetwear',             tagline: 'City-cut, drop-numbered.',              icon: 'ph-baseball-cap' },
   { slug: 'gift-ideas',             label: 'Gift Ideas',             tagline: 'For someone who reads after midnight.', icon: 'ph-gift' },
   { slug: 'monochrome-collection',  label: 'Monochrome Collection',  tagline: 'One colour, repeated.',                 icon: 'ph-circle-half' },
+  { slug: 'pantry',                 label: 'Pantry',                 tagline: 'Small jars, slow afternoons.',          icon: 'ph-coffee' },
 ];
 
 const brands = ['Nocturne & Co.', 'Maison Nocturne', 'After-Hours', 'Bridle', 'Maison Atelier'];
