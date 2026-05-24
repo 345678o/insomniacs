@@ -1734,12 +1734,20 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
    ========================================================================= */
 .header-top { display: none !important; }
 
-/* Hide the inline search form in the middle bar but keep the search-icon
-   button (which opens .search-box overlay) intact. */
+/* Inline search bar is the primary search affordance now — keep it visible
+   at every screen size. The .search-box overlay has been removed; its
+   toggle button is gone with it. */
 .header-middle .search-form,
-.header-middle .search-category,
+.header-middle .search-category {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  min-width: 260px !important;
+  max-width: 640px !important;
+}
 .header-middle .form-location-wrapper {
-  display: none !important;
+  display: flex !important;
+  flex: 1 1 auto !important;
+  min-width: 260px !important;
 }
 .header-middle .header-inner {
   justify-content: space-between !important;
