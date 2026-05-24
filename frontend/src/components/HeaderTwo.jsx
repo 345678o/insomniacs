@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import query from "jquery";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 const HeaderTwo = ({ category }) => {
+  const navigate = useNavigate();
+  const [searchQ, setSearchQ] = useState("");
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const q = searchQ.trim();
+    if (!q) return;
+    navigate(`/search?q=${encodeURIComponent(q)}`);
+  };
   const [scroll, setScroll] = useState(false);
   useEffect(() => {
     window.onscroll = () => {
@@ -68,7 +76,7 @@ const HeaderTwo = ({ category }) => {
       />
       {/* ==================== Search Box Start Here ==================== */}
 
-      <form action='#' className={`search-box ${activeSearch && "active"}`}>
+      <form onSubmit={handleSearchSubmit} className={`search-box ${activeSearch && "active"}`}>
         <button
           onClick={handleSearchToggle}
           type='button'
@@ -80,6 +88,8 @@ const HeaderTwo = ({ category }) => {
           <div className='position-relative'>
             <input
               type='text'
+              value={searchQ}
+              onChange={(e) => setSearchQ(e.target.value)}
               className='form-control py-16 px-24 text-xl rounded-pill pe-64'
               placeholder='Search for a product or brand'
             />
@@ -214,10 +224,7 @@ const HeaderTwo = ({ category }) => {
                   activeIndex === 2 ? "d-block" : ""
                 }`}
               >
-                <span className='badge-notification bg-warning-600 text-white text-sm py-2 px-8 rounded-4'>
-                  New
-                </span>
-                <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                   Pages
                 </Link>
                 <ul
@@ -279,10 +286,7 @@ const HeaderTwo = ({ category }) => {
                   activeIndex === 3 ? "d-block" : ""
                 }`}
               >
-                <span className='badge-notification bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4'>
-                  New
-                </span>
-                <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                   Vendors
                 </Link>
                 <ul
@@ -585,7 +589,7 @@ const HeaderTwo = ({ category }) => {
                 {/* Dropdown Select End */}
               </div>
               <form
-                action='#'
+                onSubmit={handleSearchSubmit}
                 className='flex-align flex-wrap form-location-wrapper'
               >
                 <div className='search-category style-two d-flex h-48 search-form d-sm-flex d-none'>
@@ -609,6 +613,8 @@ const HeaderTwo = ({ category }) => {
                   <div className='search-form__wrapper position-relative'>
                     <input
                       type='text'
+                      value={searchQ}
+                      onChange={(e) => setSearchQ(e.target.value)}
                       className='search-form__input common-input py-13 ps-16 pe-18 rounded-0 border-0'
                       placeholder='Search for a product or brand'
                     />
@@ -628,7 +634,9 @@ const HeaderTwo = ({ category }) => {
               <div className='header-two-activities flex-align flex-wrap gap-32'>
                 <button
                   type='button'
-                  className='flex-align search-icon d-lg-none d-flex gap-4 item-hover-two'
+                  onClick={handleSearchToggle}
+                  className='flex-align search-icon d-flex gap-4 item-hover-two'
+                  aria-label='Open search'
                 >
                   <span className='text-2xl text-white d-flex position-relative item-hover__text'>
                     <i className='ph ph-magnifying-glass' />
@@ -1781,10 +1789,7 @@ const HeaderTwo = ({ category }) => {
                     </ul>
                   </li>
                   <li className='on-hover-item nav-menu__item has-submenu'>
-                    <span className='badge-notification bg-warning-600 text-white text-sm py-2 px-8 rounded-4'>
-                      New
-                    </span>
-                    <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                       Pages
                     </Link>
                     <ul className='on-hover-dropdown common-dropdown nav-submenu scroll-sm'>
@@ -1851,10 +1856,7 @@ const HeaderTwo = ({ category }) => {
                     </ul>
                   </li>
                   <li className='on-hover-item nav-menu__item has-submenu'>
-                    <span className='badge-notification bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4'>
-                      New
-                    </span>
-                    <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                       Vendors
                     </Link>
                     <ul className='on-hover-dropdown common-dropdown nav-submenu scroll-sm'>

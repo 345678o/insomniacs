@@ -1,0 +1,143 @@
+// Decides which tools to call given parsed NLU + previous context.
+// Returns an ordered plan: [{ tool, args, reason }, ...]
+
+// A refine intent continues the previous turn. Anything else (product_search,
+// gift_search, find_similar) is a fresh query — prior categories/tags must NOT
+// leak into it (otherwise "gift for boy into sports" inherits "food" from the
+// last search).
+const REFINE_INTENTS = new Set(['refine_budget', 'refine_quality', 'refine_focus']);
+
+function mergeWithContext(parsed, prevContext) {
+  if (!REFINE_INTENTS.has(parsed.intent)) {
+    // Fresh query — keep only soft context (recipient, ageGroup) when the new
+    // turn didn't supply its own; drop categories/tags/price entirely.
+    return {
+      ...parsed,
+      recipient: parsed.recipient || prevContext.recipient || null,
+      ageGroup: parsed.ageGroup || prevContext.ageGroup || null,
+      categories: parsed.categories || [],
+      tags: parsed.tags || [],
+    };
+  }
+  const merged = { ...prevContext, ...parsed };
+  const prevTags = Array.isArray(prevContext.tags) ? prevContext.tags : [];
+  const newTags = Array.isArray(parsed.tags) ? parsed.tags : [];
+  const prevCats = Array.isArray(prevContext.categories) ? prevContext.categories : [];
+  const newCats = Array.isArray(parsed.categories) ? parsed.categories : [];
+
+  // If the user switched categories on a refine (e.g. sports → food), the prior
+  // tags ("fitness", "sports") would zero out the new category's results. Reset
+  // tags when the category set changes meaningfully.
+  const sameCats = newCats.length === 0
+    || (newCats.length === prevCats.length && newCats.every((c) => prevCats.includes(c)));
+  if (sameCats && (prevTags.length || newTags.length)) {
+    merged.tags = Array.from(new Set([...prevTags, ...newTags]));
+  } else {
+    merged.tags = newTags;
+  }
+
+  if (parsed.intent !== 'refine_focus' && (prevCats.length || newCats.length)) {
+    // Only carry prev categories forward if the new turn didn't pick a different
+    // one. Otherwise (e.g., user said "actually show me headphones") replace.
+    merged.categories = newCats.length ? newCats : prevCats;
+  } else if (parsed.intent === 'refine_focus') {
+    merged.categories = newCats.length ? newCats : prevCats;
+  }
+  return merged;
+}
+
+function applyBudgetHint(merged, prevContext) {
+  // USD-priced catalog (~$20 .. $2500). "cheap" = under ~$200, "premium" = $800+.
+  if (merged.budgetHint === 'cheap' && !merged.maxPrice) {
+    const prevMax = (prevContext.results && prevContext.results.priceCap) || 200;
+    merged.maxPrice = Math.max(50, Math.floor(prevMax / 2 + 100));
+  }
+  if (merged.budgetHint === 'premium' && !merged.minPrice) {
+    merged.minPrice = 800;
+  }
+  return merged;
+}
+
+function plan(parsed, prevContext = {}, userPrefs = null) {
+  const merged = applyBudgetHint(mergeWithContext(parsed, prevContext), prevContext);
+  const steps = [];
+
+  // Inject user preference biasing
+  if (userPrefs && (!merged.categories || merged.categories.length === 0) && userPrefs.favoriteCategories?.length) {
+    merged.categories = [...userPrefs.favoriteCategories];
+    merged._preferenceApplied = true;
+  }
+
+  switch (parsed.intent) {
+    case 'find_similar': {
+      const baseId = prevContext.lastProductIds?.[0];
+      if (baseId) steps.push({ tool: 'find_similar', args: { productId: baseId, limit: 6 }, reason: 'User asked for similar to last product' });
+      else steps.push({ tool: 'semantic_search', args: { naturalLanguageQuery: parsed.query, limit: 6 }, reason: 'No prior anchor — fallback to semantic search' });
+      break;
+    }
+    case 'refine_budget':
+    case 'refine_quality':
+    case 'refine_focus': {
+      steps.push({
+        tool: 'search_products',
+        args: stripUndefined({
+          query: merged.query,
+          categories: merged.categories,
+          tags: merged.tags,
+          minPrice: merged.minPrice,
+          maxPrice: merged.maxPrice,
+          minRating: parsed.intent === 'refine_quality' ? 4.5 : undefined,
+          ageGroup: merged.ageGroup,
+          limit: 8,
+        }),
+        reason: `Refining previous search (${parsed.intent})`,
+      });
+      break;
+    }
+    case 'gift_search':
+    case 'product_search':
+    default: {
+      // Hybrid: structured search + semantic search, then combine
+      steps.push({
+        tool: 'search_products',
+        args: stripUndefined({
+          query: merged.query,
+          categories: merged.categories,
+          tags: merged.tags,
+          minPrice: merged.minPrice,
+          maxPrice: merged.maxPrice,
+          ageGroup: merged.ageGroup,
+          limit: 8,
+        }),
+        reason: 'Primary structured search using extracted filters',
+      });
+      // Semantic search uses a tiny fixed embedding space (kids/premium/etc).
+      // For theme-driven queries ("sports", "gaming", "study") that don't have
+      // a matching axis, semantic recall pulls in unrelated premium products —
+      // skip it and rely on the structured filter.
+      const hasTheme = Array.isArray(merged.themes) && merged.themes.length > 0;
+      if (!hasTheme) {
+        steps.push({
+          tool: 'semantic_search',
+          args: { naturalLanguageQuery: merged.query, limit: 8 },
+          reason: 'Semantic recall to catch intent the filters missed',
+        });
+      }
+      break;
+    }
+  }
+
+  return { steps, merged };
+}
+
+function stripUndefined(obj) {
+  const out = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v === undefined || v === null) continue;
+    if (Array.isArray(v) && v.length === 0) continue;
+    out[k] = v;
+  }
+  return out;
+}
+
+module.exports = { plan, mergeWithContext };

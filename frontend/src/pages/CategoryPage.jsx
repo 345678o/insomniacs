@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Preloader from "../helper/Preloader";
 import HeaderTwo from "../components/HeaderTwo";
@@ -6,7 +6,7 @@ import FooterOne from "../components/FooterOne";
 import BottomFooter from "../components/BottomFooter";
 import ColorInit from "../helper/ColorInit";
 import ScrollToTop from "react-scroll-to-top";
-import { CATEGORIES, getCategory, getProductsByCategory } from "../data/products";
+import { fetchCategories, fetchProducts } from "../lib/api";
 
 /* ── Inline SVG bottles — visual language carried from the homepage ────── */
 const BottleArt = ({ shape = "tall", label, lot }) => {
@@ -54,31 +54,57 @@ const HeroSprig = () => (
 );
 
 const SORTS = [
-  { id: "lunar",      label: "Lunar release" },
-  { id: "newest",     label: "Newest first" },
-  { id: "price-asc",  label: "Price · low to high" },
-  { id: "price-desc", label: "Price · high to low" },
+  { id: "relevance", apiSort: "relevance", label: "Lunar release" },
+  { id: "newest",    apiSort: "newest",    label: "Newest first" },
+  { id: "price-asc", apiSort: "price-asc", label: "Price · low to high" },
+  { id: "price-desc",apiSort: "price-desc",label: "Price · high to low" },
 ];
 
-const parsePrice = (p) => Number((p || "").replace(/[^\d.]/g, "")) || 0;
+const fmtPrice = (p) =>
+  typeof p === "number" ? `£${p % 1 === 0 ? p : p.toFixed(2)}` : (p || "");
+
+const productSlug = (p) => p.slugId || p.slug || p.id || p.productId;
 
 const CategoryPage = () => {
   const { slug = "" } = useParams();
-  const category = getCategory(slug);
-  const allProducts = getProductsByCategory(slug);
-  const [sort, setSort] = useState("lunar");
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [sort, setSort] = useState("relevance");
 
-  const products = useMemo(() => {
-    const arr = [...allProducts];
-    if (sort === "price-asc") arr.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
-    else if (sort === "price-desc") arr.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
-    return arr;
-  }, [allProducts, sort]);
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    Promise.all([
+      fetchCategories(),
+      fetchProducts({ category: slug, sort, pageSize: 60 }),
+    ])
+      .then(([cats, page]) => {
+        if (cancelled) return;
+        setCategories(cats);
+        setCategory(cats.find((c) => c.slug === slug) || null);
+        setProducts(page.items || []);
+      })
+      .catch((e) => { if (!cancelled) setError(e.message); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [slug, sort]);
 
-  const display = category?.label || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) || "Catalogue";
+  const display = category?.label
+    || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+    || "Catalogue";
   const tagline = category?.tagline || "Edited in the small hours by hand.";
   const firstWord = display.split(" ")[0];
   const restWords = display.split(" ").slice(1).join(" ");
+
+  const priceRange = useMemo(() => {
+    if (!products.length) return { min: 0, max: 0 };
+    const prices = products.map((p) => Number(p.price)).filter((n) => !isNaN(n));
+    return { min: Math.min(...prices), max: Math.max(...prices) };
+  }, [products]);
 
   return (
     <>
@@ -112,13 +138,19 @@ const CategoryPage = () => {
 
       <section className="noct-cat-body">
         <div className="container container-lg">
+          {error && (
+            <div className="empty-cart" style={{ borderColor: "#9c2a2a" }}>
+              <p>Catalogue unreachable: {error}. Is the API running at <code>http://localhost:4000/api</code>?</p>
+            </div>
+          )}
+
           <div className="row gy-4">
             {/* LEFT RAIL */}
             <aside className="col-lg-3">
               <div className="noct-cat-rail">
                 <h6 className="noct-cat-rail__title">Categories</h6>
                 <ul className="noct-cat-rail__list">
-                  {CATEGORIES.map((c) => (
+                  {(categories.length ? categories : [{ slug, label: display }]).map((c) => (
                     <li key={c.slug}>
                       <Link
                         to={`/category/${c.slug}`}
@@ -138,8 +170,8 @@ const CategoryPage = () => {
                     <span style={{ width: "62%" }} />
                   </div>
                   <div className="noct-cat-rail__price-marks">
-                    <span>£28</span>
-                    <span>£684</span>
+                    <span>£{priceRange.min || 0}</span>
+                    <span>£{priceRange.max || 0}</span>
                   </div>
                 </div>
               </div>
@@ -165,13 +197,15 @@ const CategoryPage = () => {
                   <span>Sort</span>
                   <select value={sort} onChange={(e) => setSort(e.target.value)}>
                     {SORTS.map((s) => (
-                      <option key={s.id} value={s.id}>{s.label}</option>
+                      <option key={s.id} value={s.apiSort}>{s.label}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              {products.length === 0 ? (
+              {loading ? (
+                <div className="empty-cart"><p>Loading editions…</p></div>
+              ) : products.length === 0 ? (
                 <div className="empty-cart">
                   <p>No editions found in this category yet.</p>
                   <p style={{ marginTop: 12, fontSize: 14, color: "#8E7042" }}>
@@ -182,28 +216,30 @@ const CategoryPage = () => {
               ) : (
                 <div className="noct-cat-grid">
                   {products.map((p, i) => (
-                    <article className="noct-cat-card" key={p.id}>
-                      <Link to={`/product/${p.id}`} className="noct-cat-card__image">
+                    <article className="noct-cat-card" key={p.productId || p.id}>
+                      <Link to={`/product/${productSlug(p)}`} className="noct-cat-card__image">
                         <span className="noct-cat-card__lot">{`LOT N.0${(i % 8) + 1}—${"ABCDEFGHI"[i % 9]}`}</span>
                         <span className="noct-cat-card__num">{`N° ${i + 1}`}</span>
                         {p.badge && <span className="noct-cat-card__chip">{p.badge}</span>}
-                        <BottleArt shape={p.shape} label={p.name.split(" ")[0]} lot={`N.0${(i % 8) + 1}`} />
+                        <BottleArt shape={p.shape || "tall"} label={p.name.split(" ")[0]} lot={`N.0${(i % 8) + 1}`} />
                       </Link>
                       <div className="noct-cat-card__body">
                         <span className="noct-cat-card__latin">{p.subtitle}</span>
-                        <Link to={`/product/${p.id}`} className="noct-cat-card__title-link">
+                        <Link to={`/product/${productSlug(p)}`} className="noct-cat-card__title-link">
                           <h3 className="noct-cat-card__title">{p.name}</h3>
                         </Link>
                         <p className="noct-cat-card__notes">{p.description}</p>
                         <div className="noct-cat-card__foot">
                           <span className="noct-cat-card__price">
-                            {p.price}
-                            {p.oldPrice && <span className="noct-cat-card__crossed">{p.oldPrice}</span>}
+                            {fmtPrice(p.price)}
+                            {p.originalPrice && p.originalPrice > p.price && (
+                              <span className="noct-cat-card__crossed">{fmtPrice(p.originalPrice)}</span>
+                            )}
                           </span>
                           <button
                             type="button"
                             className="product-card__cart noct-cat-card__acquire"
-                            data-product={p.id}
+                            data-product={productSlug(p)}
                             data-product-name={p.name}
                           >
                             Acquire →
