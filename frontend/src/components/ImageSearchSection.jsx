@@ -12,6 +12,7 @@ const ImageSearchSection = () => {
   const [error, setError] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const [tagFilter, setTagFilter] = useState(null);
+  const [textQuery, setTextQuery] = useState("");
   const inputRef = useRef(null);
 
   // Tag counts for filter chips
@@ -22,9 +23,12 @@ const ImageSearchSection = () => {
   }, {});
   const sortedTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
 
-  const filteredResults = tagFilter
-    ? results.filter((r) => r.tag === tagFilter)
-    : results;
+  const q = textQuery.trim().toLowerCase();
+  const filteredResults = results.filter((r) => {
+    if (tagFilter && r.tag !== tagFilter) return false;
+    if (q && !`${r.name} ${r.tag}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
 
   const handleFile = useCallback((f) => {
     if (!f || !f.type.startsWith("image/")) {
@@ -79,6 +83,59 @@ const ImageSearchSection = () => {
           <p className="text-gray-600">
             Drop a photo or paste an image — we'll find visually similar products using CLIP + Valkey.
           </p>
+        </div>
+
+        {/* Text search bar */}
+        <div
+          style={{
+            maxWidth: 720,
+            margin: "0 auto 36px",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            border: "1px solid #ececec",
+            background: "#fafafa",
+            borderRadius: 999,
+            padding: "8px 16px",
+            boxShadow: "0 6px 18px -12px rgba(15, 15, 16, 0.18)",
+          }}
+        >
+          <i className="ph ph-magnifying-glass" style={{ fontSize: 18, color: "#6a6a70" }} />
+          <input
+            type="search"
+            value={textQuery}
+            onChange={(e) => setTextQuery(e.target.value)}
+            placeholder={
+              results.length > 0
+                ? "Filter results by product name..."
+                : "Type a product name (or upload an image below)"
+            }
+            style={{
+              flex: 1,
+              border: 0,
+              outline: 0,
+              background: "transparent",
+              fontSize: 14,
+              padding: "8px 4px",
+            }}
+          />
+          {textQuery && (
+            <button
+              type="button"
+              onClick={() => setTextQuery("")}
+              style={{
+                border: 0,
+                background: "transparent",
+                cursor: "pointer",
+                color: "#6a6a70",
+                fontSize: 18,
+                padding: "4px 8px",
+              }}
+              aria-label="Clear"
+            >
+              <i className="ph ph-x" />
+            </button>
+          )}
         </div>
 
         <div className="row g-4">

@@ -8,37 +8,30 @@ import ColorInit from "../helper/ColorInit";
 import ScrollToTop from "react-scroll-to-top";
 import { CATEGORIES, getCategory, getProductsByCategory } from "../data/products";
 
-/* ── Inline SVG bottles — visual language carried from the homepage ────── */
-const BottleArt = ({ shape = "tall", label, lot }) => {
-  const paths = {
-    tall:  "M -38 0 Q -38 -120 -22 -150 L 22 -150 Q 38 -120 38 0 Z",
-    round: "M -50 0 Q -56 -70 -36 -110 Q -10 -136 0 -140 Q 10 -136 36 -110 Q 56 -70 50 0 Z",
-    squat: "M -52 0 Q -52 -60 -36 -82 L 36 -82 Q 52 -60 52 0 Z",
-  };
-  const capY = shape === "round" ? -140 : (shape === "squat" ? -82 : -150);
-  const id = `cat-bg-${shape}-${(label || "x").replace(/\W+/g, "")}`;
-  return (
-    <svg viewBox="-80 -180 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#5A2024" />
-          <stop offset="60%"  stopColor="#3C1518" />
-          <stop offset="100%" stopColor="#1A0A0C" />
-        </linearGradient>
-      </defs>
-      <rect x="-9" y={capY - 14} width="18" height="14" fill="#8E7042" />
-      <rect x="-7" y={capY - 18} width="14" height="6"  fill="#C5A572" />
-      <path d={paths[shape]} fill={`url(#${id})`} stroke="#C5A572" strokeOpacity="0.55" strokeWidth="0.8" />
-      <g transform="translate(0 -60)">
-        <rect x="-40" y="-22" width="80" height="44" fill="#EFE7D6" />
-        <rect x="-40" y="-22" width="80" height="44" fill="none" stroke="#8E7042" strokeOpacity="0.4" strokeWidth="0.4" />
-        <text x="0" y="-6" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontSize="10" fill="#3C1518">{(label || "").slice(0, 14)}</text>
-        <line x1="-22" y1="0" x2="22" y2="0" stroke="#8E7042" strokeOpacity="0.5" strokeWidth="0.3" />
-        <text x="0" y="12" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="5" letterSpacing="1.6" fill="#8E7042">{lot}</text>
-      </g>
-    </svg>
-  );
+/* ── Category-mapped product imagery ──────────────────────────────────── */
+const CATEGORY_IMAGES = {
+  "fashion":                "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600",
+  "gaming":                 "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600",
+  "study-setup":            "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+  "tech-accessories":       "https://images.unsplash.com/photo-1527443060795-0402a218f96c?w=600",
+  "footwear":               "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600",
+  "streetwear":             "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600",
+  "gift-ideas":             "https://images.unsplash.com/photo-1543589923-d8253ab36c61?w=600",
+  "monochrome-collection":  "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
 };
+
+const BottleArt = ({ category, label }) => (
+  <div style={{ width: "100%", height: "100%", background: "#EFE7D6", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+    {CATEGORY_IMAGES[category] ? (
+      <img
+        src={CATEGORY_IMAGES[category]}
+        alt={label || category}
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        loading="lazy"
+      />
+    ) : null}
+  </div>
+);
 
 const HeroSprig = () => (
   <svg viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -187,7 +180,7 @@ const CategoryPage = () => {
                         <span className="noct-cat-card__lot">{`LOT N.0${(i % 8) + 1}—${"ABCDEFGHI"[i % 9]}`}</span>
                         <span className="noct-cat-card__num">{`N° ${i + 1}`}</span>
                         {p.badge && <span className="noct-cat-card__chip">{p.badge}</span>}
-                        <BottleArt shape={p.shape} label={p.name.split(" ")[0]} lot={`N.0${(i % 8) + 1}`} />
+                        <BottleArt category={p.category} label={p.name} />
                       </Link>
                       <div className="noct-cat-card__body">
                         <span className="noct-cat-card__latin">{p.subtitle}</span>

@@ -4,7 +4,7 @@
    only re-themes colors. Loaded after index.scss so it wins the cascade.
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root,
 .color-two:root,
@@ -466,8 +466,8 @@ html[data-noct-loaded] .preloader { display: none !important; }
 
 /* Fraunces only loads when the @import above resolves; cap a body-fallback
    so first paint isn't blank on the wordmark. */
-.noct-display { font-family: "Fraunces", "Cormorant Garamond", Georgia, serif; }
-.noct-mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.noct-display { font-family: "Plus Jakarta Sans", "Inter", sans-serif; }
+.noct-mono    { font-family: "Inter", "Plus Jakarta Sans", sans-serif; }
 
 /* ── (1) TOP UTILITY BAR ─────────────────────────────────────────────────
    Suppress the marketing link list. Keep language/currency selectors on
@@ -476,7 +476,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   background: #2E0F12 !important;   /* deep oxblood — sits above the parchment chrome */
   color: #EFE7D6 !important;
   padding: 6px 0 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -497,7 +497,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   flex: 1;
   text-align: center;
   color: #EFE7D6;
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
   font-style: italic;
   font-weight: 320;
   font-size: 13px;
@@ -509,7 +509,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 /* Restyle right-side language/currency selectors */
 .header-top__right .selected-text {
   color: #EFE7D6 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .2em !important;
   text-transform: uppercase !important;
@@ -549,7 +549,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .header-middle .logo a::before,
 .mobile-menu__logo::before {
   content: "Nocturne & Co.";
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
   font-style: italic;
   font-weight: 360;
   font-size: 30px;
@@ -562,7 +562,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .header-middle .logo a::after,
 .mobile-menu__logo::after {
   content: "MAISON · MMXXVI";
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 9px;
   letter-spacing: .3em;
   text-transform: uppercase;
@@ -594,7 +594,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   background: transparent !important;
   border: 0 !important;
   color: #2A1216 !important;
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-style: italic !important;
   font-size: 15px !important;
   padding: 0 18px !important;
@@ -610,7 +610,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   color: #EFE7D6 !important;
   border-radius: 999px !important;
   padding: 0 22px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -629,7 +629,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   border: 1px solid #C5A572 !important;
   border-radius: 999px !important;
   padding: 10px 18px !important;
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-style: italic !important;
   font-size: 15px !important;
   letter-spacing: -.005em !important;
@@ -656,7 +656,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .item-hover:hover .item-hover__text i { color: #5A1E22 !important; }
 .item-hover .text-md.text-gray-500 {
   color: #5A1E22 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -669,7 +669,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   color: #F5EFE0 !important;
   border: 1.5px solid #FBF6E8;
   box-shadow: 0 2px 6px rgba(58,22,26,.35);
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 9.5px !important;
   font-weight: 500;
   letter-spacing: 0;
@@ -687,7 +687,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .noct-badge-overlay::before {
   content: var(--noct-count, "0");
   font-size: 9.5px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1;
@@ -735,7 +735,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   border-left: 1px solid #E0CDA8 !important;
   border-right: 1px solid #E0CDA8 !important;
   color: #2A1216 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -752,7 +752,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 
 /* Main nav menu links */
 .nav-menu__link {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -775,7 +775,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .nav-menu__link span[class*="bg-"] {
   background: #5A1E22 !important;
   color: #F5EFE0 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 8.5px !important;
   letter-spacing: .2em !important;
   padding: 3px 7px !important;
@@ -808,7 +808,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .nav-submenu__link,
 .common-dropdown a {
   color: #2A1216 !important;
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-size: 14px !important;
   font-weight: 320 !important;
   padding: 8px 12px !important;
@@ -826,7 +826,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 
 /* Mega-menu submenus column titles */
 .submenus-submenu__title {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .28em !important;
   text-transform: uppercase !important;
@@ -857,7 +857,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .mobile-menu .nav-submenu__link,
 .mobile-menu a {
   color: #EFE7D6 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 12px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -904,7 +904,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .search-box .form-control {
   background: #FBF6E8 !important;
   border-color: #C5A572 !important;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 22px !important;
   color: #2A1216 !important;
@@ -964,7 +964,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .header-middle.style-two .logo a::before,
 .header-middle.bg-color-neutral .logo a::before {
   content: "Nocturne & Co.";
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
   font-style: italic;
   font-weight: 360;
   font-size: 30px;
@@ -977,7 +977,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .header-middle.style-two .logo a::after,
 .header-middle.bg-color-neutral .logo a::after {
   content: "MAISON · MMXXVI";
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 9px;
   letter-spacing: .3em;
   text-transform: uppercase;
@@ -1008,7 +1008,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   background: transparent !important;
   border: 0 !important;
   color: #2A1216 !important;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 15px !important;
   padding: 0 18px !important;
@@ -1022,7 +1022,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   color: #EFE7D6 !important;
   border-radius: 999px !important;
   padding: 0 22px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -1050,7 +1050,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 .header-two-activities a:hover .ph { color: #5A1E22 !important; }
 .header-two-activities a .text-md,
 .header-two-activities span.text-md {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -1066,7 +1066,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
   border-left: 1px solid #E0CDA8 !important;
   border-right: 1px solid #E0CDA8 !important;
   color: #2A1216 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -1083,7 +1083,7 @@ html[data-noct-loaded] .preloader { display: none !important; }
 /* The 'select-dropdown-for-home-two' (currency/lang picker shown on mobile
    header-two) should pick up form-control styling rather than its own */
 .select-dropdown-for-home-two {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -1166,7 +1166,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .badge-notification.bg-info-600 {
   background: #5A1E22 !important;
   color: #F5EFE0 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 8.5px !important;
   font-weight: 500 !important;
   letter-spacing: .22em !important;
@@ -1274,7 +1274,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .banner-item__content { position: relative; z-index: 2; max-width: 540px; }
 .banner-item__title,
 .banner-item__title.bounce {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-weight: 360 !important;
   font-size: clamp(38px, 5.4vw, 76px) !important;
   letter-spacing: -.022em !important;
@@ -1287,7 +1287,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .banner-item__content p,
 .banner-item__content .text-md,
 .banner-item__content .text-lg {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 18px !important;
   color: #5A463A !important;
@@ -1301,7 +1301,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   color: #FBF6E8 !important;
   border-radius: 999px !important;
   padding: 14px 28px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -1385,7 +1385,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   margin-bottom: 28px;
 }
 .noct-cat-hero__label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10.5px;
   letter-spacing: .32em;
   text-transform: uppercase;
@@ -1393,7 +1393,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .noct-cat-hero__breadcrumb {
   display: flex; gap: 10px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1406,7 +1406,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-cat-hero__breadcrumb b { color: #5A1E22; font-weight: 500; }
 
 .noct-cat-hero__title {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-weight: 340 !important;
   font-size: clamp(54px, 8vw, 124px);
   line-height: 1;
@@ -1425,7 +1425,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-cat-hero__sprig { width: 220px; margin: 8px auto 22px; opacity: .9; }
 
 .noct-cat-hero__sub {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 18px;
   color: #5A463A;
@@ -1446,7 +1446,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   margin-bottom: 22px;
 }
 .noct-cat-rail__title {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10.5px;
   letter-spacing: .28em;
   text-transform: uppercase;
@@ -1461,7 +1461,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .noct-cat-rail__list a {
   display: block;
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 15px;
   color: #2A1216;
   padding: 5px 0;
@@ -1498,7 +1498,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .noct-cat-rail__price-marks {
   display: flex; justify-content: space-between;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   color: #5A463A;
   margin-top: 10px;
@@ -1511,7 +1511,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-cat-rail__chips li {
   background: #F0E5C9;
   border: 1px solid #E0CDA8;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -1537,7 +1537,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   flex-wrap: wrap;
 }
 .noct-cat-toolbar__count {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1545,7 +1545,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .noct-cat-toolbar__count b { color: #5A1E22; }
 .noct-cat-toolbar__count em {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   color: #2A1216;
   text-transform: none;
@@ -1554,7 +1554,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .noct-cat-toolbar__sort {
   display: flex; align-items: center; gap: 10px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1565,7 +1565,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border: 1px solid #C5A572;
   border-radius: 2px;
   padding: 8px 32px 8px 12px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -1623,7 +1623,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-cat-card__lot {
   position: absolute;
   top: 14px; left: 14px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 9.5px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1632,7 +1632,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-cat-card__num {
   position: absolute;
   top: 12px; right: 16px;
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 22px;
   color: #5A1E22;
@@ -1644,7 +1644,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   bottom: 14px; left: 14px;
   background: #5A1E22;
   color: #F5EFE0;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 9px;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -1655,14 +1655,14 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 
 .noct-cat-card__body { padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
 .noct-cat-card__latin {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 12.5px;
   color: rgba(142,112,66,.95);
   font-variation-settings: "opsz" 18;
 }
 .noct-cat-card__title {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
   font-weight: 360;
   font-size: 22px;
   line-height: 1.1;
@@ -1672,7 +1672,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   margin: 0;
 }
 .noct-cat-card__notes {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 13.5px;
   line-height: 1.5;
@@ -1687,7 +1687,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   display: flex; justify-content: space-between; align-items: center;
 }
 .noct-cat-card__price {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 21px;
   color: #5A1E22;
@@ -1696,7 +1696,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   font-variation-settings: "opsz" 36, "SOFT" 50, "WONK" 1;
 }
 .noct-cat-card__crossed {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-style: normal;
   font-size: 11px;
   color: #8E7042;
@@ -1705,7 +1705,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   opacity: .8;
 }
 .noct-cat-card__acquire {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -1777,7 +1777,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   display: inline-flex;
   align-items: center;
   padding: 0 20px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10.5px;
   letter-spacing: .26em;
   text-transform: uppercase;
@@ -1804,7 +1804,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   margin: 0 0 28px;
   padding: 0;
   list-style: none;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1842,7 +1842,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-product__lot {
   position: absolute;
   top: 18px; left: 18px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10.5px;
   letter-spacing: .26em;
   text-transform: uppercase;
@@ -1879,7 +1879,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   display: flex; flex-direction: column; gap: 18px;
 }
 .noct-product__category {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .26em;
   text-transform: uppercase;
@@ -1887,7 +1887,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .noct-product__category a { color: #5A1E22; }
 .noct-product__title {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-weight: 360 !important;
   font-size: clamp(36px, 4.4vw, 58px);
   line-height: 1.02;
@@ -1897,7 +1897,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   margin: 0;
 }
 .noct-product__sub {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 18px;
   color: #5A463A;
@@ -1907,7 +1907,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 
 .noct-product__rating {
   display: flex; align-items: center; gap: 12px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10.5px;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -1920,14 +1920,14 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   color: #B58844;
   font-size: 16px;
   letter-spacing: 4px;
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .noct-product__price {
   display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
 }
 .noct-product__price-main {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: italic;
   font-size: 42px;
   color: #5A1E22;
@@ -1935,13 +1935,13 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   letter-spacing: -.015em;
 }
 .noct-product__price-old {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
   color: #8E7042;
   text-decoration: line-through;
 }
 .noct-product__price-chip {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 9.5px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1953,7 +1953,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 
 .noct-product__desc {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 16px;
   line-height: 1.65;
   color: #2A1216;
@@ -1970,11 +1970,11 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   display: flex; justify-content: space-between;
   padding: 11px 0;
   border-bottom: 1px dashed #E0CDA8;
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 15px;
 }
 .noct-product__facts li span {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10.5px;
   letter-spacing: .24em;
   text-transform: uppercase;
@@ -1988,7 +1988,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 
 .noct-product__qty { display: flex; align-items: center; gap: 18px; }
 .noct-product__qty-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .24em;
   text-transform: uppercase;
@@ -2014,7 +2014,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   width: 44px;
   border: 0; border-left: 1px solid #C5A572; border-right: 1px solid #C5A572;
   background: transparent;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
   text-align: center;
   color: #2A1216;
@@ -2032,7 +2032,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border: 0 !important;
   border-radius: 999px !important;
   padding: 16px 26px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 12px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -2052,7 +2052,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border: 1px solid #C5A572;
   border-radius: 999px;
   padding: 14px 24px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .24em;
   text-transform: uppercase;
@@ -2068,7 +2068,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .noct-product__wishlist i { font-size: 16px; }
 
 .noct-product__post {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 10px;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -2086,7 +2086,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border-bottom: 1px solid #E0CDA8;
 }
 .noct-product__related-head h2 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-weight: 360 !important;
   font-size: clamp(32px, 4vw, 52px);
   letter-spacing: -.02em;
@@ -2099,7 +2099,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   font-variation-settings: "opsz" 96, "SOFT" 60, "WONK" 1;
 }
 .noct-product__related-link {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 11px;
   letter-spacing: .26em;
   text-transform: uppercase;
@@ -2123,7 +2123,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   background: #FBF6E8;
   border: 1px solid #E0CDA8;
   color: #2A1216;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif;
   font-size: 12px;
   letter-spacing: .12em;
   padding: 10px 16px;
@@ -2195,7 +2195,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 
 /* "New" / "Hot" / "Sale" notification badges in nav and product cards */
 .badge-notification {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 9.5px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -2207,7 +2207,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 
 /* Product card badges ("Sale 50%", "Best Sale", "Hot", etc.) */
 .product-card__badge {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10px !important;
   letter-spacing: .18em !important;
   text-transform: uppercase !important;
@@ -2239,7 +2239,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .breadcrumb > * { position: relative; z-index: 1; }
 .breadcrumb h6 {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-style: italic !important;
   font-weight: 360 !important;
   font-size: 30px !important;
@@ -2248,7 +2248,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   margin: 0 !important;
 }
 .breadcrumb ul.flex-align {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -2347,7 +2347,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .product-card .product-card__title,
 .product-card h6,
 .product-card h5 {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-size: 17px !important;
   font-weight: 360 !important;
   letter-spacing: -.012em !important;
@@ -2355,7 +2355,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   line-height: 1.25 !important;
 }
 .product-card .product-card__price {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 19px !important;
   color: #5A1E22 !important;
@@ -2385,7 +2385,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .shop-sidebar__box h6,
 .shop-sidebar__box .sidebar-title {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -2395,7 +2395,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border-bottom: 1px solid #E0CDA8 !important;
 }
 .shop-sidebar__box ul li {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 15px !important;
   padding: 7px 0 !important;
   transition: color .25s ease, padding-left .25s ease;
@@ -2440,7 +2440,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   line-height: 44px !important;
   color: #2A1216 !important;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 14px !important;
   padding-left: 14px !important;
 }
@@ -2465,7 +2465,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .cart-table thead th,
 .table-product thead th {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -2488,7 +2488,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   background: #F5EFE0;
 }
 .table-product__content h6 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 16px !important;
   color: #2A1216 !important;
 }
@@ -2531,7 +2531,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border: 1px solid #C5A572 !important;
   border-left: 0 !important;
   border-right: 0 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 13px !important;
   color: #2A1216 !important;
   text-align: center;
@@ -2547,7 +2547,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .cart-sidebar h6,
 .checkout-sidebar h6 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 26px !important;
   color: #2A1216 !important;
@@ -2568,7 +2568,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 }
 .cart-sidebar ul li span:last-child,
 .checkout-sidebar ul li span:last-child {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   color: #5A1E22 !important;
 }
@@ -2581,7 +2581,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
   border: 1px solid #C5A572 !important;
   border-radius: 999px !important;
   padding: 12px 18px !important;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic;
   color: #2A1216 !important;
   font-size: 15px !important;
@@ -2592,7 +2592,7 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
    ========================================================================= */
 .checkout { padding: 60px 0 !important; background: #F5EFE0; }
 .checkout h6, .checkout h5, .checkout h4 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   letter-spacing: -.015em !important;
   color: #2A1216 !important;
@@ -2607,7 +2607,7 @@ select.form-select {
   border: 1px solid #C5A572 !important;
   border-radius: 2px !important;
   padding: 12px 14px !important;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 15px !important;
   color: #2A1216 !important;
   height: auto !important;
@@ -2627,7 +2627,7 @@ textarea.form-control::placeholder { color: #8E7042 !important; font-style: ital
 
 label.form-label,
 label.common-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
@@ -2650,7 +2650,7 @@ label.common-label {
   background: #F0E5C9 !important;
 }
 .payment-item__content {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 15px !important;
   color: #2A1216 !important;
 }
@@ -2663,7 +2663,7 @@ label.common-label {
   border-color: #5A1E22 !important;
 }
 .form-check-label {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   color: #2A1216 !important;
 }
 
@@ -2698,7 +2698,7 @@ label.common-label {
 .product-details__content h2,
 .product-details__content h3,
 .product-details__content h4 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-weight: 360 !important;
   color: #2A1216 !important;
   letter-spacing: -.02em !important;
@@ -2710,7 +2710,7 @@ label.common-label {
 }
 .product-details__content .product-details__price,
 .product-details__content [class*="price"] {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 32px !important;
   color: #5A1E22 !important;
@@ -2735,7 +2735,7 @@ label.common-label {
   border: 0 !important;
   border-bottom: 2px solid transparent !important;
   color: #5A463A !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -2756,7 +2756,7 @@ label.common-label {
 .tab-pane,
 .tab-content {
   color: #2A1216;
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 16px;
   line-height: 1.7;
 }
@@ -2769,7 +2769,7 @@ label.common-label {
   border: 0 !important;
   border-radius: 999px !important;
   padding: 16px 32px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 12px !important;
   letter-spacing: .28em !important;
   text-transform: uppercase !important;
@@ -2785,7 +2785,7 @@ label.common-label {
   border: 1px solid #C5A572 !important;
   border-radius: 999px !important;
   padding: 14px 28px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -2803,7 +2803,7 @@ label.common-label {
 .account-tabs .nav-link {
   background: transparent !important;
   color: #5A463A !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -2858,7 +2858,7 @@ img { max-width: 100%; height: auto; }
   border-radius: 4px !important;
   padding: 60px 40px !important;
   text-align: center;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 20px !important;
   color: #5A463A !important;
@@ -2924,7 +2924,7 @@ section[class*="wishlist"] {
 .blog-item__content h5,
 .blog-item__content h6,
 .blog-item__content .blog-title {
-  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
   font-style: normal !important;
   font-weight: 360 !important;
   font-size: 22px !important;
@@ -2940,14 +2940,14 @@ section[class*="wishlist"] {
 .blog-item__content .post-date,
 .blog-item__content time,
 .blog-item__content [class*="date"] {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
   color: #8E7042 !important;
 }
 .blog-item__content p {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 15px !important;
   line-height: 1.6 !important;
   color: #5A463A !important;
@@ -2958,7 +2958,7 @@ section[class*="wishlist"] {
 .blog-item__content .btn-link,
 .blog-item__content a[class*="read"],
 .blog-item__content .read-more {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -2988,7 +2988,7 @@ section[class*="wishlist"] {
 .blog-sidebar h5,
 .blog-sidebar h6,
 .blog-sidebar .sidebar-title {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -2998,7 +2998,7 @@ section[class*="wishlist"] {
   border-bottom: 1px solid #E0CDA8 !important;
 }
 .blog-sidebar ul li {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 15px !important;
   padding: 7px 0 !important;
 }
@@ -3007,13 +3007,13 @@ section[class*="wishlist"] {
 .blog-details article,
 .blog-details .single-post,
 .blog-details .post-content {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 17px !important;
   line-height: 1.75 !important;
   color: #2A1216 !important;
 }
 .blog-details h1, .blog-details h2 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-weight: 360 !important;
   letter-spacing: -.022em !important;
   color: #2A1216 !important;
@@ -3023,7 +3023,7 @@ section[class*="wishlist"] {
   padding: 20px 28px;
   margin: 28px 0;
   background: #F0E5C9;
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 20px;
   color: #2A1216;
@@ -3053,7 +3053,7 @@ section[class*="wishlist"] {
 }
 .contact-box h5, .contact-box h6,
 .contact-box .contact-title {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -3062,7 +3062,7 @@ section[class*="wishlist"] {
 }
 .contact-box p,
 .contact-box a {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 17px !important;
   color: #2A1216 !important;
@@ -3120,7 +3120,7 @@ section[class*="wishlist"] {
 .vendors-two-item h5,
 .vendors-two-item h6,
 .vendors-two-item__top h5 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-weight: 360 !important;
   font-size: 22px !important;
   letter-spacing: -.012em !important;
@@ -3129,7 +3129,7 @@ section[class*="wishlist"] {
 .vendor-card .vendor-meta,
 .vendor-card .vendor-location,
 .vendors-two-item__top span {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -3154,7 +3154,7 @@ section[class*="wishlist"] {
 [class*="stat-card"] .stat-value,
 [class*="metric-card"] .metric-value,
 [class*="analytics-card"] [class*="value"] {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-style: italic !important;
   font-size: 38px !important;
   color: #5A1E22 !important;
@@ -3163,7 +3163,7 @@ section[class*="wishlist"] {
 [class*="stat-card"] .stat-label,
 [class*="metric-card"] .metric-label,
 [class*="analytics-card"] [class*="label"] {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -3209,7 +3209,7 @@ section[class*="seller"] [class*="benefit"]:hover {
 }
 .product-dContent__header h3,
 .product-dContent__header h4 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-weight: 360 !important;
   letter-spacing: -.02em !important;
   color: #2A1216 !important;
@@ -3222,7 +3222,7 @@ section[class*="seller"] [class*="benefit"]:hover {
   border: 0 !important;
   border-radius: 999px !important;
   padding: 14px 28px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11.5px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
@@ -3237,7 +3237,7 @@ section[class*="seller"] [class*="benefit"]:hover {
 .nav-pills .nav-link {
   background: transparent !important;
   color: #5A463A !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -3288,7 +3288,7 @@ ul.pagination {
   background: #FBF6E8 !important;
   border: 1px solid #E0CDA8 !important;
   color: #2A1216 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 12px !important;
   width: 40px; height: 40px;
   display: inline-flex !important;
@@ -3320,13 +3320,13 @@ ul.pagination {
 }
 [class*="review-item"] h6,
 [class*="comment-item"] h6 {
-  font-family: "Fraunces", serif !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
   font-size: 17px !important;
   color: #2A1216 !important;
 }
 [class*="review-item"] .review-meta,
 [class*="comment-item"] .comment-date {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10px !important;
   letter-spacing: .24em !important;
   text-transform: uppercase !important;
@@ -3342,7 +3342,7 @@ ul.pagination {
   background: #F0E5C9 !important;
   border: 1px solid #E0CDA8 !important;
   color: #5A1E22 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 10px !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
