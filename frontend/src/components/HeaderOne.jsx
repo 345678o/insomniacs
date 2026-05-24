@@ -699,9 +699,16 @@ const HeaderOne = () => {
                 <div className='search-form__wrapper position-relative'>
                   <input
                     type='text'
-                    className='search-form__input common-input py-13 ps-16 pe-18 rounded-end-pill pe-44'
+                    className='search-form__input common-input py-13 ps-16 pe-18 rounded-end-pill pe-80'
                     placeholder='Search for a product or brand'
                   />
+                  <Link
+                    to='/search/image'
+                    title='Search by image'
+                    className='w-32 h-32 bg-gray-100 rounded-circle flex-center text-lg text-heading position-absolute top-50 translate-middle-y inset-inline-end-0 me-44 hover-bg-main-100'
+                  >
+                    <i className='ph ph-camera' />
+                  </Link>
                   <button
                     type='submit'
                     className='w-32 h-32 bg-main-600 rounded-circle flex-center text-xl text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8'
