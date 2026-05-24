@@ -1039,16 +1039,11 @@ html[data-noct-loaded] .preloader { display: none !important; }
   background: #2A1216 !important;
   color: #EFE7D6 !important;
   border-radius: 999px !important;
-<<<<<<< HEAD
   padding: 0 22px !important;
   font-family: "Inter", "Plus Jakarta Sans", sans-serif !important;
   font-size: 11px !important;
   letter-spacing: .26em !important;
   text-transform: uppercase !important;
-=======
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
-  font-size: 13px !important;
->>>>>>> 7f28ba66de59cce88218db79235893f817e3d861
   border: 0 !important;
   /* HeaderTwo button is sized w-48; HeaderOne is w-32 absolutely positioned.
      Keep both clean: just style colors + border-radius. */
