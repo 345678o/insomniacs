@@ -5,6 +5,7 @@ import FooterTwo from "../components/FooterTwo";
 import ColorInit from "../helper/ColorInit";
 import { mockFilter, parseNL } from "../helper/mockCatalog";
 import ProductImage from "../components/common/ProductImage";
+import { fetchCategories } from "../lib/api";
 
 const API_URL =
   process.env.REACT_APP_API_URL || "http://localhost:4000/api/agent";
@@ -45,6 +46,13 @@ const SearchResultsPage = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const [usingMock, setUsingMock] = useState(false);
+  const [allCategories, setAllCategories] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchCategories().then((cats) => { if (!cancelled) setAllCategories(cats); }).catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     if (!q) return;
@@ -147,14 +155,19 @@ const SearchResultsPage = () => {
 
           {data && data.notInCatalog && (
             <div className="alert alert-warning">
-              <strong>Not in our catalog right now.</strong> "{q}" doesn't match any product or category we carry.
+              <strong>Not in our catalogue right now.</strong> "{q}" doesn't match any product or category we carry.
               <div className="mt-8 text-sm">Try one of these instead:</div>
               <div className="d-flex gap-8 flex-wrap mt-8">
-                <Link to="/category/sports"     className="btn btn-sm btn-outline-main">Sports</Link>
-                <Link to="/category/stationery" className="btn btn-sm btn-outline-main">Stationery</Link>
-                <Link to="/category/food"       className="btn btn-sm btn-outline-main">Food</Link>
-                <Link to="/category/headphone"  className="btn btn-sm btn-outline-main">Headphones</Link>
-                <Link to="/categories"          className="btn btn-sm btn-outline-main">All categories</Link>
+                {(allCategories.length ? allCategories : [
+                  { slug: "fashion", label: "Fashion" },
+                  { slug: "footwear", label: "Footwear" },
+                  { slug: "gaming", label: "Gaming" },
+                  { slug: "study-setup", label: "Study Setup" },
+                  { slug: "gift-ideas", label: "Gift Ideas" },
+                ]).map((c) => (
+                  <Link key={c.slug} to={`/category/${c.slug}`} className="btn btn-sm btn-outline-main">{c.label}</Link>
+                ))}
+                <Link to="/categories" className="btn btn-sm btn-outline-main">All categories</Link>
               </div>
             </div>
           )}

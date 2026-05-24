@@ -10,27 +10,41 @@ const CATEGORY_HINTS = {
   'tech-accessories':      ['tech', 'tech accessories', 'cable', 'cable organizer', 'usb-c', 'usb c', 'hub', 'mousepad', 'stylus', 'screen cloth'],
   'footwear':              ['shoe', 'shoes', 'footwear', 'derby', 'sneaker', 'loafer', 'slipper', 'boot', 'boots', 'oxford'],
   'streetwear':            ['streetwear', 'hoodie', 'tee', 't-shirt', 'track jacket', 'cap', 'five-panel', 'cross-body', 'bag'],
-  'gift-ideas':            ['gift', 'gifts', 'gift idea', 'gift ideas', 'present', 'candle', 'tea', 'incense', 'writing set', 'gift card'],
+  'gift-ideas':            ['gift', 'gifts', 'gift idea', 'gift ideas', 'present', 'candle', 'candles', 'tea', 'teas', 'incense', 'writing set', 'gift card', 'pen', 'pens', 'fountain pen', 'ballpoint'],
   'monochrome-collection': ['monochrome', 'monochrome collection', 'all black', 'black tee', 'black coat', 'cashmere', 'flannel trouser', 'scarf'],
 };
 
 // Themes that don't map to a single category but should bias multiple ones.
 const THEME_HINTS = {
-  gaming:   { kws: ['gaming', 'gamer', 'esports', 'fps', 'console gamer'],
+  gaming:   { kws: ['gaming', 'gamer', 'esports', 'fps', 'console gamer', 'rgb keyboard', 'mechanical keyboard'],
               categories: ['gaming'],
               tags: ['gaming', 'mechanical', 'rgb'] },
-  study:    { kws: ['study', 'studying', 'student', 'school', 'college', 'university', 'desk setup', 'workspace', 'reading'],
+  study:    { kws: ['study', 'studying', 'student', 'school', 'college', 'university', 'desk setup', 'workspace', 'reading', 'reading lamp'],
               categories: ['study-setup', 'tech-accessories'],
               tags: ['desk', 'walnut', 'brass', 'lamp', 'organizer'] },
-  monochrome: { kws: ['all black', 'monochrome', 'minimal', 'minimalist'],
+  monochrome: { kws: ['all black', 'monochrome', 'minimal', 'minimalist', 'all in black'],
                 categories: ['monochrome-collection', 'fashion'],
                 tags: ['black', 'monochrome'] },
-  gifting:  { kws: ['gift', 'present', 'birthday', 'anniversary', 'housewarming'],
+  gifting:  { kws: ['gift', 'present', 'birthday', 'anniversary', 'housewarming', 'something nice'],
               categories: ['gift-ideas'],
               tags: ['gift', 'boxed'] },
-  fashion:  { kws: ['fashion', 'outfit', 'wardrobe', 'tailoring', 'style'],
+  fashion:  { kws: ['fashion', 'outfit', 'wardrobe', 'tailoring', 'style', 'menswear', 'clothing'],
               categories: ['fashion', 'monochrome-collection', 'streetwear'],
               tags: ['fashion', 'wool', 'cotton', 'tailoring'] },
+  // "Sports" doesn't map cleanly to any one Nocturne category, but running
+  // shoes, sneakers, cleats live in Footwear and ergonomic gaming gear is
+  // adjacent. Surface both rather than dead-ending the user.
+  athletic: { kws: ['sports', 'sport', 'athletic', 'fitness', 'gym', 'workout', 'running', 'runner', 'jogging', 'cycling', 'soccer', 'football', 'basketball', 'tennis', 'training', 'yoga', 'cleats', 'trainers'],
+              categories: ['footwear', 'gaming'],
+              tags: ['footwear', 'athletic', 'running'] },
+  // Office / workspace tech adjacent to study-setup but more functional.
+  office:   { kws: ['office', 'wfh', 'work from home', 'work setup', 'productivity'],
+              categories: ['tech-accessories', 'study-setup'],
+              tags: ['office', 'desk', 'organizer'] },
+  // Streetwear synonyms
+  casual:   { kws: ['streetwear', 'casual', 'street', 'urban', 'hoodie', 'hoodies', 'tee', 'tees', 'cap', 'caps', 'sneaker', 'sneakers', 'sneakerhead', 'track jacket'],
+              categories: ['streetwear', 'footwear'],
+              tags: ['streetwear', 'hoodie', 'sneaker'] },
 };
 
 const STOPWORDS = new Set(['i','a','an','the','my','for','to','of','and','or','please','find','show','me','need','want','looking','some','any','that','this']);

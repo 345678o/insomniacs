@@ -114,11 +114,22 @@ function plan(parsed, prevContext = {}, userPrefs = null) {
     case 'gift_search':
     case 'product_search':
     default: {
-      // Hybrid: structured search + semantic search, then combine
+      // If the user's whole query was a theme keyword ("sports", "running
+      // shoes"), the literal tokens don't appear in any product hay and the
+      // qToken filter zeroes the result. We strip the theme/synonym words
+      // from the query when a theme was detected — categories+tags already
+      // encode the intent.
+      const themeWords = /\b(sports?|athletic|fitness|gym|workout|running|runner|jogging|cycling|soccer|football|basketball|tennis|training|yoga|cleats|trainers|gaming|gamer|esports|fps|study|studying|student|school|college|university|workspace|reading|monochrome|minimal|minimalist|gift|present|birthday|fashion|outfit|wardrobe|tailoring|style|menswear|clothing|office|wfh|productivity|streetwear|casual|street|urban|hoodie|hoodies|tee|tees|cap|caps|sneaker|sneakers|sneakerhead|track|jacket|shoes|shoe)\b/gi;
+      const hasTheme = Array.isArray(merged.themes) && merged.themes.length > 0;
+      const queryStripped = hasTheme
+        ? String(merged.query || '').replace(themeWords, ' ').replace(/\s+/g, ' ').trim()
+        : String(merged.query || '');
+      const hasMeaningfulRemainder = queryStripped.split(/\s+/).filter((w) => w.length >= 3).length > 0;
+
       steps.push({
         tool: 'search_products',
         args: stripUndefined({
-          query: merged.query,
+          query: hasMeaningfulRemainder ? queryStripped : '',
           categories: merged.categories,
           tags: merged.tags,
           minPrice: merged.minPrice,
@@ -132,7 +143,6 @@ function plan(parsed, prevContext = {}, userPrefs = null) {
       // For theme-driven queries ("sports", "gaming", "study") that don't have
       // a matching axis, semantic recall pulls in unrelated premium products —
       // skip it and rely on the structured filter.
-      const hasTheme = Array.isArray(merged.themes) && merged.themes.length > 0;
       if (!hasTheme) {
         steps.push({
           tool: 'semantic_search',
