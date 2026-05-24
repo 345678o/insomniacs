@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Preloader from "../helper/Preloader";
 import HeaderTwo from "../components/HeaderTwo";
@@ -6,7 +6,7 @@ import FooterOne from "../components/FooterOne";
 import BottomFooter from "../components/BottomFooter";
 import ColorInit from "../helper/ColorInit";
 import ScrollToTop from "react-scroll-to-top";
-import { getProduct, getCategory, getRelatedProducts } from "../data/products";
+import { fetchProduct, fetchProducts, fetchCategories, fetchSimilar } from "../lib/api";
 
 const CATEGORY_IMAGES = {
   "fashion":                "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600",
@@ -32,11 +32,76 @@ const BottleArt = ({ category, label }) => (
   </div>
 );
 
+const fmtPrice = (p) =>
+  typeof p === "number" ? `£${p % 1 === 0 ? p : p.toFixed(2)}` : (p || "");
+const productSlug = (p) => p.slugId || p.slug || p.id || p.productId;
+
 const ProductPage = () => {
   const { id = "" } = useParams();
-  const product = getProduct(id);
-  const category = product ? getCategory(product.category) : null;
-  const related = product ? getRelatedProducts(id, 4) : [];
+  const [product, setProduct] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [related, setRelated] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [qty, setQty] = useState(1);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    setProduct(null);
+    setRelated([]);
+
+    (async () => {
+      try {
+        const p = await fetchProduct(id);
+        if (cancelled) return;
+        if (!p) {
+          setProduct(null);
+          return;
+        }
+        setProduct(p);
+
+        // Category meta + related — best-effort, don't block render.
+        Promise.all([
+          fetchCategories().then((cats) => cats.find((c) => c.slug === p.category) || null),
+          // Prefer similar API; fall back to a category list.
+          fetchSimilar(p.productId, 4).catch(() => null).then(async (sim) => {
+            if (sim && sim.length) return sim;
+            const page = await fetchProducts({ category: p.category, pageSize: 8 });
+            return (page.items || []).filter((q) => q.productId !== p.productId).slice(0, 4);
+          }),
+        ]).then(([cat, rel]) => {
+          if (cancelled) return;
+          setCategory(cat);
+          setRelated(rel || []);
+        }).catch(() => { /* non-fatal */ });
+      } catch (e) {
+        if (!cancelled) setError(e.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <>
+        <Preloader />
+        <ColorInit color={false} />
+        <HeaderTwo />
+        <section className="noct-cat-body">
+          <div className="container container-lg">
+            <div className="empty-cart"><p>Loading edition…</p></div>
+          </div>
+        </section>
+        <FooterOne />
+        <BottomFooter />
+      </>
+    );
+  }
 
   if (!product) {
     return (
@@ -47,7 +112,7 @@ const ProductPage = () => {
         <section className="noct-cat-body">
           <div className="container container-lg">
             <div className="empty-cart">
-              <p>That edition isn't in the catalogue.</p>
+              <p>{error ? `Catalogue error: ${error}` : "That edition isn't in the catalogue."}</p>
               <Link to="/shop" style={{ color: "#5A1E22", padding: "12px 0", display: "inline-block" }}>
                 ← Return to the catalogue
               </Link>
@@ -59,6 +124,8 @@ const ProductPage = () => {
       </>
     );
   }
+
+  const lotId = (product.productId || "").slice(-3).toUpperCase() || "07A";
 
   return (
     <>
@@ -85,7 +152,7 @@ const ProductPage = () => {
             <div className="col-lg-7">
               <div className="noct-product__gallery">
                 <div className="noct-product__gallery-main">
-                  <span className="noct-product__lot">{`LOT N.07 — ${product.id.slice(-1).toUpperCase()}`}</span>
+                  <span className="noct-product__lot">{`LOT N.07 — ${lotId}`}</span>
                   <BottleArt category={product.category} label={product.name} />
                 </div>
                 <div className="noct-product__gallery-thumbs">
@@ -110,12 +177,14 @@ const ProductPage = () => {
 
                 <div className="noct-product__rating">
                   <span aria-hidden="true">✦ ✦ ✦ ✦ ✦</span>
-                  <small>4.8 · 124 letters of correspondence</small>
+                  <small>{product.rating ?? 4.8} · {product.reviewCount ?? 124} letters of correspondence</small>
                 </div>
 
                 <div className="noct-product__price">
-                  <span className="noct-product__price-main">{product.price}</span>
-                  {product.oldPrice && <span className="noct-product__price-old">{product.oldPrice}</span>}
+                  <span className="noct-product__price-main">{fmtPrice(product.price)}</span>
+                  {product.originalPrice && product.originalPrice > product.price && (
+                    <span className="noct-product__price-old">{fmtPrice(product.originalPrice)}</span>
+                  )}
                   {product.badge && <span className="noct-product__price-chip">{product.badge}</span>}
                 </div>
 
@@ -124,16 +193,17 @@ const ProductPage = () => {
                 <ul className="noct-product__facts">
                   <li><span>Hand-numbered</span><b>Yes</b></li>
                   <li><span>Atelier</span><b>Hackney Wick · E15</b></li>
-                  <li><span>Lot</span><b>N.07</b></li>
+                  <li><span>Lot</span><b>{`N.${lotId}`}</b></li>
+                  <li><span>In stock</span><b>{product.inStock ? `${product.stock} on shelf` : "Out of stock"}</b></li>
                   <li><span>Ships within</span><b>3–5 working days</b></li>
                 </ul>
 
                 <div className="noct-product__qty">
                   <span className="noct-product__qty-label">Quantity</span>
                   <div className="noct-product__qty-control">
-                    <button type="button" aria-label="decrease">−</button>
-                    <input type="text" defaultValue="1" aria-label="quantity" />
-                    <button type="button" aria-label="increase">+</button>
+                    <button type="button" aria-label="decrease" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
+                    <input type="text" value={qty} readOnly aria-label="quantity" />
+                    <button type="button" aria-label="increase" onClick={() => setQty((q) => q + 1)}>+</button>
                   </div>
                 </div>
 
@@ -141,10 +211,10 @@ const ProductPage = () => {
                   <button
                     type="button"
                     className="product-card__cart noct-product__acquire"
-                    data-product={product.id}
+                    data-product={productSlug(product)}
                     data-product-name={product.name}
                   >
-                    Acquire — {product.price}
+                    Acquire — {fmtPrice(product.price)}
                   </button>
                   <button
                     type="button"
@@ -173,8 +243,8 @@ const ProductPage = () => {
               </div>
               <div className="noct-cat-grid">
                 {related.map((p, i) => (
-                  <article className="noct-cat-card" key={p.id}>
-                    <Link to={`/product/${p.id}`} className="noct-cat-card__image">
+                  <article className="noct-cat-card" key={p.productId || p.id}>
+                    <Link to={`/product/${productSlug(p)}`} className="noct-cat-card__image">
                       <span className="noct-cat-card__lot">{`LOT N.0${(i % 8) + 1}`}</span>
                       <span className="noct-cat-card__num">{`N° ${i + 1}`}</span>
                       {p.badge && <span className="noct-cat-card__chip">{p.badge}</span>}
@@ -182,15 +252,15 @@ const ProductPage = () => {
                     </Link>
                     <div className="noct-cat-card__body">
                       <span className="noct-cat-card__latin">{p.subtitle}</span>
-                      <Link to={`/product/${p.id}`} className="noct-cat-card__title-link">
+                      <Link to={`/product/${productSlug(p)}`} className="noct-cat-card__title-link">
                         <h3 className="noct-cat-card__title">{p.name}</h3>
                       </Link>
                       <div className="noct-cat-card__foot">
-                        <span className="noct-cat-card__price">{p.price}</span>
+                        <span className="noct-cat-card__price">{fmtPrice(p.price)}</span>
                         <button
                           type="button"
                           className="product-card__cart noct-cat-card__acquire"
-                          data-product={p.id}
+                          data-product={productSlug(p)}
                           data-product-name={p.name}
                         >
                           Acquire →

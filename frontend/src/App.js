@@ -23,6 +23,8 @@ import WishlistPage from "./pages/WishlistPage";
 import ImageSearchPage from "./pages/ImageSearchPage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
+import SearchResultsPage from "./pages/SearchResultsPage";
+import CategoriesPage from "./pages/CategoriesPage";
 function App() {
   return (
     <BrowserRouter>
@@ -36,6 +38,8 @@ function App() {
         <Route exact path='/index-three' element={<HomePageThree />} />
         <Route exact path='/shop' element={<ShopPage />} />
         <Route exact path='/search/image' element={<ImageSearchPage />} />
+        <Route exact path='/search' element={<SearchResultsPage />} />
+        <Route exact path='/categories' element={<CategoriesPage />} />
         <Route exact path='/category/:slug' element={<CategoryPage />} />
         <Route exact path='/product/:id' element={<ProductPage />} />
         <Route

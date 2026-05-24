@@ -1,16 +1,15 @@
-# Visual Search Backend
+# Backend
 
-Image-similarity search powered by CLIP embeddings (`@xenova/transformers`) and Valkey's vector search.
+Unified backend for the Valkey hackathon project, combining two subsystems:
 
-## Stack
-- **Embedding model:** `Xenova/clip-vit-base-patch32` (512-dim, pulled on first run, ~150 MB)
-- **Vector store:** Valkey Search module (HNSW index, cosine distance)
-- **Server:** Express + multer (multipart upload)
-- **Client:** [iovalkey](https://www.npmjs.com/package/iovalkey)
+1. **Agentic Search** (NL + semantic search, recommendations) — lives in `src/`
+2. **Visual Search** (CLIP image-similarity) — lives at the backend root (`server.js`, `seed.js`, `lib/`)
+
+Both speak to a Valkey instance with the search module loaded.
 
 ## Prerequisites
 
-Valkey running with the search module — easiest path is the bundled image:
+Valkey with the search module — use the bundle image:
 
 ```bash
 docker run -d --name valkey -p 6379:6379 valkey/valkey-bundle:9-alpine
@@ -21,68 +20,39 @@ docker run -d --name valkey -p 6379:6379 valkey/valkey-bundle:9-alpine
 ```bash
 cd backend
 npm install
-cp .env.example .env       # optional, defaults already work
+cp .env.example .env   # fill in GEMINI_API_KEY if you want LLM responses
 ```
 
-## One-time seed (embeds catalog + creates index)
+## Agentic Search (default `npm start`)
 
 ```bash
-npm run seed
+npm run seed           # seed catalog into Valkey
+npm start              # serves the NL/semantic search API on PORT (default 4000)
 ```
 
-First run downloads the CLIP model (~150 MB) into `./models/`. Subsequent runs use the cache.
+Endpoints live under `/api/*` (see `src/routes/` for the full list).
 
-## Run the server
+## Visual Search (image-similarity, separate process)
+
+The visual search server lives at `server.js` at the backend root.
+It uses CLIP embeddings (`@xenova/transformers`) + Valkey vector search.
 
 ```bash
-npm start
-# server listening on http://localhost:4000
+# In a separate terminal (different PORT so it doesn't clash):
+PORT=4100 node server.js
+node seed.js           # one-time: embed product images into Valkey
 ```
 
-## API
+API:
+- `POST /api/search/image`  multipart/form-data, field `image`
+- `GET  /api/debug`         index + product count
 
-### `POST /api/search/image`
-Multipart form with field `image`.
+The frontend page `/search/image` calls this endpoint. Update its URL via
+`REACT_APP_SEARCH_API` if you change the port.
 
-```bash
-curl -F "image=@./my-photo.jpg" http://localhost:4000/api/search/image
-```
+## Notes
 
-Response:
-
-```json
-{
-  "count": 12,
-  "results": [
-    { "id": "p002", "name": "Headsound", "tag": "Music", "price": "$12.00", "rating": "5", "reviews": "1.2k", "image": "https://..." }
-  ]
-}
-```
-
-### `GET /api/health`
-Liveness check.
-
-## How it works
-
-```
-[products.json]
-      ↓ npm run seed
-  CLIP embed each image (512-dim float32, L2-normalized)
-      ↓
-  Valkey: HSET product:<id> { ..., embedding: <bytes> }
-  Valkey: FT.CREATE products_idx ... VECTOR HNSW DIM 512 COSINE
-      ↓
-[upload at /api/search/image]
-      ↓
-  CLIP embed query image
-      ↓
-  Valkey: FT.SEARCH products_idx "*=>[KNN 12 @embedding $vec AS score]"
-      ↓
-  Sorted JSON results
-```
-
-## Troubleshooting
-
-- **`unknown command 'FT.CREATE'`** — Valkey is running but without the search module. Use the `valkey-bundle` image, not plain `valkey/valkey`.
-- **First request is slow (~5s)** — model warmup. Hit `/api/health` after start to pre-warm; the server also calls `warmup()` on boot.
-- **Out of memory while seeding** — switch to a smaller model (`Xenova/clip-vit-base-patch16`) or seed in smaller batches.
+- Both subsystems share the same Valkey instance but use different key prefixes
+  (agentic uses its own; visual search uses `product:<id>` with embeddings).
+- The two are NOT integrated into a single Express app yet — you run them as
+  two processes during a demo. Architecture cleanup is a follow-up.

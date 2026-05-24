@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import query from "jquery";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const HeaderOne = () => {
+  const navigate = useNavigate();
+  const [searchQ, setSearchQ] = useState("");
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const q = searchQ.trim();
+    if (!q) return;
+    navigate(`/search?q=${encodeURIComponent(q)}`);
+  };
   const [scroll, setScroll] = useState(false);
   useEffect(() => {
     window.onscroll = () => {
@@ -68,7 +76,7 @@ const HeaderOne = () => {
         className={`side-overlay ${(menuActive || activeCategory) && "show"}`}
       />
       {/* ==================== Search Box Start Here ==================== */}
-      <form action='#' className={`search-box ${activeSearch && "active"}`}>
+      <form onSubmit={handleSearchSubmit} className={`search-box ${activeSearch && "active"}`}>
         <button
           onClick={handleSearchToggle}
           type='button'
@@ -80,6 +88,8 @@ const HeaderOne = () => {
           <div className='position-relative'>
             <input
               type='text'
+              value={searchQ}
+              onChange={(e) => setSearchQ(e.target.value)}
               className='form-control py-16 px-24 text-xl rounded-pill pe-64'
               placeholder='Search for a product or brand'
             />
@@ -218,10 +228,7 @@ const HeaderOne = () => {
                   activeIndex === 2 ? "d-block" : ""
                 }`}
               >
-                <span className='badge-notification bg-warning-600 text-white text-sm py-2 px-8 rounded-4'>
-                  New
-                </span>
-                <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                   Pages
                 </Link>
                 <ul
@@ -287,10 +294,7 @@ const HeaderOne = () => {
                   activeIndex === 3 ? "d-block" : ""
                 }`}
               >
-                <span className='badge-notification bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4'>
-                  New
-                </span>
-                <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                   Vendors
                 </Link>
                 <ul
@@ -675,7 +679,7 @@ const HeaderOne = () => {
             {/* Logo End  */}
             {/* form location Start */}
             <form
-              action='#'
+              onSubmit={handleSearchSubmit}
               className='flex-align flex-wrap form-location-wrapper'
             >
               <div className='search-category d-flex h-48 select-border-end-0 radius-end-0 search-form d-sm-flex d-none'>
@@ -699,6 +703,8 @@ const HeaderOne = () => {
                 <div className='search-form__wrapper position-relative'>
                   <input
                     type='text'
+                    value={searchQ}
+                    onChange={(e) => setSearchQ(e.target.value)}
                     className='search-form__input common-input py-13 ps-16 pe-18 rounded-end-pill pe-80'
                     placeholder='Search for a product or brand'
                   />
@@ -1272,10 +1278,7 @@ const HeaderOne = () => {
                     </ul>
                   </li>
                   <li className='on-hover-item nav-menu__item has-submenu'>
-                    <span className='badge-notification bg-warning-600 text-white text-sm py-2 px-8 rounded-4'>
-                      New
-                    </span>
-                    <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                       Pages
                     </Link>
                     <ul className='on-hover-dropdown common-dropdown nav-submenu scroll-sm'>
@@ -1346,10 +1349,7 @@ const HeaderOne = () => {
                     </ul>
                   </li>
                   <li className='on-hover-item nav-menu__item has-submenu'>
-                    <span className='badge-notification bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4'>
-                      New
-                    </span>
-                    <Link to='#' className='nav-menu__link'>
+<Link to='#' className='nav-menu__link'>
                       Vendors
                     </Link>
                     <ul className='on-hover-dropdown common-dropdown nav-submenu scroll-sm'>
