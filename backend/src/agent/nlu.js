@@ -58,10 +58,10 @@ function detectBudget(text) {
   if (m) return { maxPrice: +m[1] };
   m = t.match(/(?:rs\.?|inr|\$|₹|£|€)\s*(\d{2,6})\s*(?:budget|max|or less)/);
   if (m) return { maxPrice: +m[1] };
-  m = t.match(/over\s*(?:rs\.?|inr|\$|₹|£|€)?\s*(\d{2,6})/);
+  m = t.match(/(?:over|above|more than)\s*(?:rs\.?|inr|\$|₹|£|€)?\s*(\d{2,6})/);
   if (m) return { minPrice: +m[1] };
-  if (/\b(cheap|cheaper|budget|affordable|inexpensive)\b/.test(t)) return { _hint: 'cheap' };
-  if (/\b(premium|luxury|high.?end|flagship|best)\b/.test(t)) return { _hint: 'premium' };
+  if (/\b(cheap|cheaper|budget|affordable|inexpensive|less expensive)\b/.test(t)) return { _hint: 'cheap' };
+  if (/\b(premium|luxury|high.?end|flagship|expensive|pricier|pricey|more expensive|most expensive)\b/.test(t)) return { _hint: 'premium' };
   return {};
 }
 
@@ -69,10 +69,10 @@ function detectIntent(text) {
   const t = text.toLowerCase();
   if (/\b(gift|present|birthday|anniversary)\b/.test(t)) return 'gift_search';
   if (/\bcompare\b/.test(t)) return 'compare';
-  if (/\bcheaper|under|below|budget|less\b/.test(t)) return 'refine_budget';
-  if (/\bbest|top|highest rated|premium\b/.test(t)) return 'refine_quality';
-  if (/\bsimilar|like that one|alternatives\b/.test(t)) return 'find_similar';
-  if (/\bwhat about|how about|tell me more about\b/.test(t)) return 'refine_focus';
+  if (/\b(cheaper|under|below|budget|less expensive|less than)\b/.test(t)) return 'refine_budget';
+  if (/\b(more expensive|pricier|expensive|premium|luxury|high.?end|flagship|best|top|highest rated|most expensive)\b/.test(t)) return 'refine_quality';
+  if (/\b(similar|like that one|alternatives)\b/.test(t)) return 'find_similar';
+  if (/\b(what about|how about|tell me more about)\b/.test(t)) return 'refine_focus';
   return 'product_search';
 }
 

@@ -47,13 +47,15 @@ function mergeWithContext(parsed, prevContext) {
 }
 
 function applyBudgetHint(merged, prevContext) {
-  // USD-priced catalog (~$20 .. $2500). "cheap" = under ~$200, "premium" = $800+.
+  // Nocturne & Co. catalogue ranges roughly £28..£684. Calibrate thresholds
+  // so "cheap" returns the affordable end and "premium" returns the top tier.
   if (merged.budgetHint === 'cheap' && !merged.maxPrice) {
-    const prevMax = (prevContext.results && prevContext.results.priceCap) || 200;
-    merged.maxPrice = Math.max(50, Math.floor(prevMax / 2 + 100));
+    const prevMax = (prevContext.maxPrice) || 150;
+    merged.maxPrice = Math.max(30, Math.floor(prevMax * 0.6));
   }
   if (merged.budgetHint === 'premium' && !merged.minPrice) {
-    merged.minPrice = 800;
+    const prevMin = (prevContext.minPrice) || 200;
+    merged.minPrice = Math.max(200, prevMin);
   }
   return merged;
 }
@@ -78,16 +80,31 @@ function plan(parsed, prevContext = {}, userPrefs = null) {
     case 'refine_budget':
     case 'refine_quality':
     case 'refine_focus': {
+      // Refines are price/quality directives, not product descriptions. If the
+      // user typed "more expensive" alone, the word "expensive" shouldn't filter
+      // product hay — drop the free-text so only the structured filters apply.
+      // Keep query iff the user *also* mentioned a real noun beyond refine
+      // keywords (heuristic: any kept tag survives).
+      const refineWords = /\b(cheaper|under|below|budget|less|expensive|pricier|pricey|premium|luxury|flagship|best|top|highest|most|more|rated)\b/g;
+      const queryStripped = String(merged.query || '').replace(refineWords, ' ').replace(/\s+/g, ' ').trim();
+      const keepQuery = queryStripped.split(/\s+/).filter((w) => w.length >= 3).length > 0
+        && (merged.categories || []).length === 0;
+      const sortHint = parsed.intent === 'refine_budget'
+        ? 'price-asc'
+        : parsed.intent === 'refine_quality'
+          ? 'price-desc'
+          : 'relevance';
       steps.push({
         tool: 'search_products',
         args: stripUndefined({
-          query: merged.query,
+          query: keepQuery ? queryStripped : '',
           categories: merged.categories,
           tags: merged.tags,
           minPrice: merged.minPrice,
           maxPrice: merged.maxPrice,
           minRating: parsed.intent === 'refine_quality' ? 4.5 : undefined,
           ageGroup: merged.ageGroup,
+          sort: sortHint,
           limit: 8,
         }),
         reason: `Refining previous search (${parsed.intent})`,

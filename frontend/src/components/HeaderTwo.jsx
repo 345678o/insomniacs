@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import query from "jquery";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import SearchSuggestions from "./common/SearchSuggestions";
 const HeaderTwo = ({ category }) => {
   const navigate = useNavigate();
   const [searchQ, setSearchQ] = useState("");
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const submitSearch = (raw) => {
+    const q = String(raw || "").trim();
+    if (!q) return;
+    setSuggestOpen(false);
+    navigate(`/search?q=${encodeURIComponent(q)}`);
+  };
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const q = searchQ.trim();
-    if (!q) return;
-    navigate(`/search?q=${encodeURIComponent(q)}`);
+    submitSearch(searchQ);
   };
   const [scroll, setScroll] = useState(false);
   useEffect(() => {
@@ -76,32 +82,8 @@ const HeaderTwo = ({ category }) => {
       />
       {/* ==================== Search Box Start Here ==================== */}
 
-      <form onSubmit={handleSearchSubmit} className={`search-box ${activeSearch && "active"}`}>
-        <button
-          onClick={handleSearchToggle}
-          type='button'
-          className='search-box__close position-absolute inset-block-start-0 inset-inline-end-0 m-16 w-48 h-48 border border-gray-100 rounded-circle flex-center text-white hover-text-gray-800 hover-bg-white text-2xl transition-1'
-        >
-          <i className='ph ph-x' />
-        </button>
-        <div className='container'>
-          <div className='position-relative'>
-            <input
-              type='text'
-              value={searchQ}
-              onChange={(e) => setSearchQ(e.target.value)}
-              className='form-control py-16 px-24 text-xl rounded-pill pe-64'
-              placeholder='Search for a product or brand'
-            />
-            <button
-              type='submit'
-              className='w-48 h-48 bg-main-600 rounded-circle flex-center text-xl text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8'
-            >
-              <i className='ph ph-magnifying-glass' />
-            </button>
-          </div>
-        </div>
-      </form>
+      {/* Overlay search removed — the inline search bar in the middle header is
+          always visible and editable on every screen size. */}
       {/* ==================== Search Box End Here ==================== */}
       {/* ==================== Mobile Menu Start Here ==================== */}
       <div
@@ -591,37 +573,32 @@ const HeaderTwo = ({ category }) => {
               <form
                 onSubmit={handleSearchSubmit}
                 className='flex-align flex-wrap form-location-wrapper'
+                role='search'
               >
-                <div className='search-category style-two d-flex h-48 search-form d-sm-flex d-none'>
-                  <select
-                    defaultValue={1}
-                    className='js-example-basic-single border border-gray-200 border-end-0 rounded-0 border-0'
-                    name='state'
-                  >
-                    <option value={1}>All Categories</option>
-                    <option value={1}>Grocery</option>
-                    <option value={1}>Breakfast &amp; Dairy</option>
-                    <option value={1}>Vegetables</option>
-                    <option value={1}>Milks and Dairies</option>
-                    <option value={1}>Pet Foods &amp; Toy</option>
-                    <option value={1}>Breads &amp; Bakery</option>
-                    <option value={1}>Fresh Seafood</option>
-                    <option value={1}>Fronzen Foods</option>
-                    <option value={1}>Noodles &amp; Rice</option>
-                    <option value={1}>Ice Cream</option>
-                  </select>
-                  <div className='search-form__wrapper position-relative'>
+                <div className='search-category style-two d-flex h-48 search-form flex-grow-1 position-relative'>
+                  <div className='search-form__wrapper position-relative flex-grow-1'>
                     <input
                       type='text'
                       value={searchQ}
-                      onChange={(e) => setSearchQ(e.target.value)}
+                      onChange={(e) => { setSearchQ(e.target.value); setSuggestOpen(true); }}
+                      onFocus={() => setSuggestOpen(true)}
                       className='search-form__input common-input py-13 ps-16 pe-18 rounded-0 border-0'
-                      placeholder='Search for a product or brand'
+                      placeholder='Search the catalogue — try "more expensive", "under £150", "gift for a friend"'
+                      aria-label='Search products'
+                      aria-autocomplete='list'
+                      autoComplete='off'
+                    />
+                    <SearchSuggestions
+                      value={searchQ}
+                      open={suggestOpen}
+                      onPick={(label) => { setSearchQ(label); submitSearch(label); }}
+                      onClose={() => setSuggestOpen(false)}
                     />
                   </div>
                   <button
                     type='submit'
-                    className='bg-main-two-600 flex-center text-xl text-white flex-shrink-0 w-48 hover-bg-main-two-700 d-lg-flex d-none'
+                    className='bg-main-two-600 flex-center text-xl text-white flex-shrink-0 w-48 hover-bg-main-two-700 d-flex'
+                    aria-label='Submit search'
                   >
                     <i className='ph ph-magnifying-glass' />
                   </button>
@@ -632,16 +609,7 @@ const HeaderTwo = ({ category }) => {
             {/* Header Middle Right start */}
             <div className='header-right flex-align d-lg-block d-none'>
               <div className='header-two-activities flex-align flex-wrap gap-32'>
-                <button
-                  type='button'
-                  onClick={handleSearchToggle}
-                  className='flex-align search-icon d-flex gap-4 item-hover-two'
-                  aria-label='Open search'
-                >
-                  <span className='text-2xl text-white d-flex position-relative item-hover__text'>
-                    <i className='ph ph-magnifying-glass' />
-                  </span>
-                </button>
+                {/* search-icon removed: search bar is now always visible inline */}
                 <Link
                   to='/account'
                   className='flex-align flex-column gap-8 item-hover-two'

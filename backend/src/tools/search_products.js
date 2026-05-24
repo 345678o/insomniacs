@@ -12,6 +12,7 @@ async function searchProducts(params = {}) {
     minRating,
     ageGroup, // legacy from older agent prompts; ignored for electronics catalog
     brand,
+    sort = 'relevance',
     limit = 8,
   } = params;
 
@@ -29,7 +30,7 @@ async function searchProducts(params = {}) {
       minRating,
       tags,
       inStock: true,
-      sort: 'relevance',
+      sort,
       page: 1,
       pageSize: limit,
     });
