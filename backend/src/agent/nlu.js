@@ -12,6 +12,7 @@ const CATEGORY_HINTS = {
   'streetwear':            ['streetwear', 'hoodie', 'tee', 't-shirt', 'track jacket', 'cap', 'five-panel', 'cross-body', 'bag'],
   'gift-ideas':            ['gift', 'gifts', 'gift idea', 'gift ideas', 'present', 'candle', 'candles', 'tea', 'teas', 'incense', 'writing set', 'gift card', 'pen', 'pens', 'fountain pen', 'ballpoint'],
   'monochrome-collection': ['monochrome', 'monochrome collection', 'all black', 'black tee', 'black coat', 'cashmere', 'flannel trouser', 'scarf'],
+  'pantry':                ['pantry', 'grocery', 'groceries', 'food', 'edible', 'edibles', 'olive oil', 'oil', 'coffee', 'coffee beans', 'tea', 'oolong', 'honey', 'chocolate', 'spice', 'spices', 'cooking'],
 };
 
 // Themes that don't map to a single category but should bias multiple ones.

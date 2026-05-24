@@ -119,9 +119,15 @@ function plan(parsed, prevContext = {}, userPrefs = null) {
       // qToken filter zeroes the result. We strip the theme/synonym words
       // from the query when a theme was detected — categories+tags already
       // encode the intent.
-      const themeWords = /\b(sports?|athletic|fitness|gym|workout|running|runner|jogging|cycling|soccer|football|basketball|tennis|training|yoga|cleats|trainers|gaming|gamer|esports|fps|study|studying|student|school|college|university|workspace|reading|monochrome|minimal|minimalist|gift|present|birthday|fashion|outfit|wardrobe|tailoring|style|menswear|clothing|office|wfh|productivity|streetwear|casual|street|urban|hoodie|hoodies|tee|tees|cap|caps|sneaker|sneakers|sneakerhead|track|jacket|shoes|shoe)\b/gi;
+      // Strip BOTH theme keywords AND category-hint keywords. Without this,
+      // "groceries" (which maps to pantry via CATEGORY_HINTS) leaves the literal
+      // token "groceries" in the qToken filter — and no product hay contains
+      // that word, so the filter zeroes the results.
+      const themeWords = /\b(sports?|athletic|fitness|gym|workout|running|runner|jogging|cycling|soccer|football|basketball|tennis|training|yoga|cleats|trainers|gaming|gamer|esports|fps|study|studying|student|school|college|university|workspace|reading|monochrome|minimal|minimalist|gift|gifts|present|birthday|fashion|outfit|wardrobe|tailoring|style|menswear|clothing|office|wfh|productivity|streetwear|casual|street|urban|hoodie|hoodies|tee|tees|cap|caps|sneaker|sneakers|sneakerhead|track|jacket|shoes|shoe|grocery|groceries|food|edible|edibles|pantry|cooking)\b/gi;
       const hasTheme = Array.isArray(merged.themes) && merged.themes.length > 0;
-      const queryStripped = hasTheme
+      const hasCategoryMatch = Array.isArray(merged.categories) && merged.categories.length > 0;
+      const shouldStrip = hasTheme || hasCategoryMatch;
+      const queryStripped = shouldStrip
         ? String(merged.query || '').replace(themeWords, ' ').replace(/\s+/g, ' ').trim()
         : String(merged.query || '');
       const hasMeaningfulRemainder = queryStripped.split(/\s+/).filter((w) => w.length >= 3).length > 0;

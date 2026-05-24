@@ -26,6 +26,7 @@ export const CATEGORIES = [
   { slug: "streetwear",           label: "Streetwear",           tagline: "City-cut, drop-numbered." },
   { slug: "gift-ideas",           label: "Gift Ideas",           tagline: "For someone who reads after midnight." },
   { slug: "monochrome-collection", label: "Monochrome Collection", tagline: "One colour, repeated." },
+  { slug: "pantry",                label: "Pantry",                tagline: "Small jars, slow afternoons." },
 ];
 
 export const PRODUCTS = [
