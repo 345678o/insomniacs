@@ -995,15 +995,30 @@ html[data-noct-loaded] .preloader { display: none !important; }
   .header-middle.bg-color-neutral .logo a::after { display: none; }
 }
 
-/* search-category.style-two should look identical to .search-category */
-.search-category.style-two,
-.search-form__wrapper {
+/* Only the OUTER search container gets the brass pill border; the inner
+   .search-form__wrapper is a transparent flex child that holds the input
+   and the absolutely-positioned submit button. Styling both was producing
+   nested pills with the button floating in the gap between them. */
+.search-form,
+.search-category,
+.search-category.style-two {
   border: 1px solid #C5A572 !important;
   border-radius: 999px !important;
   background: #F5EFE0 !important;
-  overflow: hidden;
+  overflow: hidden !important;
+  height: 48px !important;
+  padding: 0 !important;
 }
-.search-category.style-two input,
+.search-form__wrapper {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.search-form input,
+.search-category input,
 .search-form__wrapper input {
   background: transparent !important;
   border: 0 !important;
@@ -1012,24 +1027,26 @@ html[data-noct-loaded] .preloader { display: none !important; }
   font-style: italic !important;
   font-size: 15px !important;
   padding: 0 18px !important;
-  height: 48px;
+  height: 48px !important;
+  width: 100% !important;
 }
-.search-category.style-two input::placeholder,
+.search-form input::placeholder,
+.search-category input::placeholder,
 .search-form__wrapper input::placeholder { color: #8E7042 !important; opacity: .8; }
-.search-category.style-two button,
+.search-form button[type="submit"],
+.search-category button[type="submit"],
 .search-form__wrapper button[type="submit"] {
   background: #2A1216 !important;
   color: #EFE7D6 !important;
   border-radius: 999px !important;
-  padding: 0 22px !important;
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
-  font-size: 11px !important;
-  letter-spacing: .26em !important;
-  text-transform: uppercase !important;
+  font-size: 13px !important;
   border: 0 !important;
-  height: 100% !important;
+  /* HeaderTwo button is sized w-48; HeaderOne is w-32 absolutely positioned.
+     Keep both clean: just style colors + border-radius. */
 }
-.search-category.style-two button:hover,
+.search-form button[type="submit"]:hover,
+.search-category button[type="submit"]:hover,
 .search-form__wrapper button[type="submit"]:hover { background: #5A1E22 !important; }
 
 /* HeaderTwo's "activities" cluster (wishlist/cart/account icons on the right) */
