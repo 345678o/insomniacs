@@ -13,6 +13,7 @@ import BlogPage from "./pages/BlogPage";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import ContactPage from "./pages/ContactPage";
 import PhosphorIconInit from "./helper/PhosphorIconInit";
+import NocturneEnhance from "./helper/NocturneEnhance";
 import VendorPage from "./pages/VendorPage";
 import VendorDetailsPage from "./pages/VendorDetailsPage";
 import VendorTwoPage from "./pages/VendorTwoPage";
@@ -20,11 +21,14 @@ import VendorTwoDetailsPage from "./pages/VendorTwoDetailsPage";
 import BecomeSellerPage from "./pages/BecomeSellerPage";
 import WishlistPage from "./pages/WishlistPage";
 import ImageSearchPage from "./pages/ImageSearchPage";
+import CategoryPage from "./pages/CategoryPage";
+import ProductPage from "./pages/ProductPage";
 function App() {
   return (
     <BrowserRouter>
       <RouteScrollToTop />
       <PhosphorIconInit />
+      <NocturneEnhance />
 
       <Routes>
         <Route exact path='/' element={<HomePageOne />} />
@@ -32,6 +36,8 @@ function App() {
         <Route exact path='/index-three' element={<HomePageThree />} />
         <Route exact path='/shop' element={<ShopPage />} />
         <Route exact path='/search/image' element={<ImageSearchPage />} />
+        <Route exact path='/category/:slug' element={<CategoryPage />} />
+        <Route exact path='/product/:id' element={<ProductPage />} />
         <Route
           exact
           path='/product-details'
