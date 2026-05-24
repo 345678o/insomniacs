@@ -938,6 +938,20 @@ html[data-noct-loaded] .preloader { display: none !important; }
   border-bottom: 1px solid #E0CDA8 !important;
 }
 
+/* Hide the old "All Categories" mega-menu trigger + dropdown — the slim
+   category strip below the nav already lists the real 8 categories. */
+.category,
+.category-two,
+.menu-category-wrapper > .category,
+.menu-category-wrapper > .category-two {
+  display: none !important;
+}
+/* Re-balance the nav row now that the category trigger is gone */
+.header .header-inner > .menu-category-wrapper {
+  flex: 1;
+}
+.header .nav-menu { justify-content: flex-start; padding-left: 0 !important; }
+
 /* Apply the same logo wordmark on style-two header middle */
 .header-middle.style-two .logo a,
 .header-middle.bg-color-neutral .logo a {
@@ -1220,6 +1234,124 @@ body, html { overflow-x: clip !important; overflow-y: visible; }
 /* (10) Avoid odd flex stretching in flex-align containers used everywhere */
 .flex-align { align-items: center !important; }
 .flex-between { align-items: center !important; }
+
+/* =========================================================================
+   BANNER (homepage hero — BannerOne) — repaint the lime-green grocery
+   banner with a parchment + brass treatment that matches the maison.
+   ========================================================================= */
+.banner { padding: 36px 0 56px; background: #F5EFE0 !important; }
+.banner-item,
+.banner .banner-item,
+.banner-item.rounded-24 {
+  background: linear-gradient(135deg, #F0E5C9 0%, #EFE0C2 50%, #F0E5C9 100%) !important;
+  border: 1px solid #E0CDA8 !important;
+  border-radius: 4px !important;
+  position: relative;
+  overflow: hidden;
+}
+.banner-item::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><circle cx='1' cy='1' r='.4' fill='%23C5A572' opacity='.45'/></svg>");
+  background-size: 6px 6px;
+  pointer-events: none;
+  opacity: .7;
+}
+/* The cover image inside (.banner-img) — fade it out so the grocery
+   background never punches through */
+.banner-img {
+  opacity: .15 !important;
+  filter: sepia(.4) hue-rotate(-25deg) saturate(.55);
+  mix-blend-mode: multiply;
+}
+
+.banner-slider__inner {
+  position: relative;
+  padding: 60px 64px !important;
+}
+@media (max-width: 720px) { .banner-slider__inner { padding: 36px 24px !important; } }
+
+.banner-item__content { position: relative; z-index: 2; max-width: 540px; }
+.banner-item__title,
+.banner-item__title.bounce {
+  font-family: "Fraunces", "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 360 !important;
+  font-size: clamp(38px, 5.4vw, 76px) !important;
+  letter-spacing: -.022em !important;
+  line-height: 1.05 !important;
+  color: #2A1216 !important;
+  font-variation-settings: "opsz" 96, "SOFT" 30 !important;
+  text-transform: none !important;
+  animation: none !important;
+}
+.banner-item__content p,
+.banner-item__content .text-md,
+.banner-item__content .text-lg {
+  font-family: "Fraunces", serif !important;
+  font-style: italic !important;
+  font-size: 18px !important;
+  color: #5A463A !important;
+  font-variation-settings: "opsz" 24 !important;
+}
+
+/* "Explore Shop" CTA in the banner */
+.banner-item__content .btn-main,
+.banner .btn-main {
+  background: #5A1E22 !important;
+  color: #FBF6E8 !important;
+  border-radius: 999px !important;
+  padding: 14px 28px !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 11.5px !important;
+  letter-spacing: .26em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  border: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.banner-item__content .btn-main:hover {
+  background: #2A1216 !important;
+  letter-spacing: .3em !important;
+}
+
+/* Banner's circular "scroll down" disc */
+.banner .scroll-down,
+.banner-item .scroll-down {
+  background: #C5A572 !important;
+  border-color: #FBF6E8 !important;
+  color: #2A1216 !important;
+  width: 64px !important;
+  height: 64px !important;
+}
+.banner .scroll-down:hover { background: #5A1E22 !important; color: #FBF6E8 !important; }
+
+/* Slick carousel arrows in the banner */
+.banner .slick-arrow,
+.banner .slick-next,
+.banner .slick-prev {
+  background: #FBF6E8 !important;
+  border: 1px solid #C5A572 !important;
+  color: #2A1216 !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+.banner .slick-arrow:hover {
+  background: #5A1E22 !important;
+  color: #FBF6E8 !important;
+  border-color: #5A1E22 !important;
+}
+
+/* Big placeholder image area in BannerOne (where "597X354" shows) */
+.banner-slider__inner > img,
+.banner-item img:not(.banner-img) {
+  filter: sepia(.25) saturate(.7);
+  border-radius: 4px;
+  border: 1px solid #E0CDA8;
+  background: #F5EFE0;
+  mix-blend-mode: multiply;
+}
 
 /* =========================================================================
    CATEGORY PAGE — /category/:slug
