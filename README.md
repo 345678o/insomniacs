@@ -20,7 +20,7 @@ Catalogue browse:
 
 Natural-language search results:
 
-![Search results](screenshot2.png)
+![Search results](screenshot2.jpeg)
 
 ---
 
